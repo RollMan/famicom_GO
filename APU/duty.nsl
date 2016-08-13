@@ -1,0 +1,101 @@
+declare duty{
+  input Vin[4];
+  input dnum[2];
+  output V0[4];
+
+  func_in set(dnum);
+  func_in exec();
+}
+
+module duty{
+  reg cnt[4] = 0;
+  reg d[2];
+  func set{
+    d := dnum;
+  }
+  func exec(){
+    if(d == 2'b00){
+      any{
+        count ==  0 : V0 = 1
+        count ==  1 : V0 = 1
+        count ==  2 : V0 = 0
+        count ==  3 : V0 = 0
+        count ==  4 : V0 = 0
+        count ==  5 : V0 = 0
+        count ==  6 : V0 = 0
+        count ==  7 : V0 = 0
+        count ==  8 : V0 = 0
+        count ==  9 : V0 = 0
+        count == 10 : V0 = 0
+        count == 11 : V0 = 0
+        count == 12 : V0 = 0
+        count == 13 : V0 = 0
+        count == 14 : V0 = 0
+        count == 15 : V0 = 0
+      }
+    }
+    if(d == 2'b01){
+      any{
+        count ==  0 : V0 = 1
+        count ==  1 : V0 = 1
+        count ==  2 : V0 = 1
+        count ==  3 : V0 = 1
+        count ==  4 : V0 = 0
+        count ==  5 : V0 = 0
+        count ==  6 : V0 = 0
+        count ==  7 : V0 = 0
+        count ==  8 : V0 = 0
+        count ==  9 : V0 = 0
+        count == 10 : V0 = 0
+        count == 11 : V0 = 0
+        count == 12 : V0 = 0
+        count == 13 : V0 = 0
+        count == 14 : V0 = 0
+        count == 15 : V0 = 0
+      }
+
+    }
+    if(d == 2'b10){
+      any{
+        count ==  0 : V0 = 1
+        count ==  1 : V0 = 1
+        count ==  2 : V0 = 1
+        count ==  3 : V0 = 1
+        count ==  4 : V0 = 1
+        count ==  5 : V0 = 1
+        count ==  6 : V0 = 1
+        count ==  7 : V0 = 1
+        count ==  8 : V0 = 0
+        count ==  9 : V0 = 0
+        count == 10 : V0 = 0
+        count == 11 : V0 = 0
+        count == 12 : V0 = 0
+        count == 13 : V0 = 0
+        count == 14 : V0 = 0
+        count == 15 : V0 = 0
+      }
+
+    }
+    if(d == 2'b11){
+      any{
+        count ==  0 : V0 = 1
+        count ==  1 : V0 = 1
+        count ==  2 : V0 = 1
+        count ==  3 : V0 = 1
+        count ==  4 : V0 = 1
+        count ==  5 : V0 = 1
+        count ==  6 : V0 = 1
+        count ==  7 : V0 = 1
+        count ==  8 : V0 = 1
+        count ==  9 : V0 = 1
+        count == 10 : V0 = 1
+        count == 11 : V0 = 1
+        count == 12 : V0 = 0
+        count == 13 : V0 = 0
+        count == 14 : V0 = 0
+        count == 15 : V0 = 0
+      }
+    }
+    count++;
+  }
+}
