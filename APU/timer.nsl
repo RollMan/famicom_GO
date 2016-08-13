@@ -1,0 +1,13 @@
+declare timer{
+  input freq[11];
+
+  func_in set_freq(freq);
+  func_out exec();
+}
+
+module timer{
+  reg[11] freq_r;
+  func set_freq{
+    freq_r := freq;
+  }
+}
