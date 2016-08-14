@@ -1,5 +1,13 @@
-#include "duty.nsl"
-module duty{
+declare duty2{
+  input Vin[4];
+  input dnum[2];
+  output V0[4];
+
+  func_in setduty(dnum);
+  func_in exec();
+}
+
+module duty2{
   reg cnt[6] = 0;
   reg d[2];
 
