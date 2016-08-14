@@ -1,5 +1,5 @@
 /*
- Produced by NSL Core(version=20140126), IP ARCH, Inc. Sun Aug 14 23:25:07 2016
+ Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 00:33:42 2016
  Licensed to :EVALUATION USER
 */
 /*
@@ -34,14 +34,15 @@ module sweep ( p_reset , m_clock , e , p , n , s , lencntr , timer_input , perio
   output timer_set;
   wire timer_set;
   reg e_r;
-  reg [3:0] p_r;
+  reg [2:0] p_r;
   reg n_r;
   reg [2:0] s_r;
   reg [11:0] period_r;
-  reg [3:0] pp;
+  reg [11:0] period_r2;
+  reg [2:0] pp;
   wire _net_0;
   wire [10:0] _net_1;
-  wire [2:0] _net_2;
+  wire [10:0] _net_2;
   wire _net_3;
   wire _net_4;
   wire _net_5;
@@ -54,7 +55,7 @@ module sweep ( p_reset , m_clock , e , p , n , s , lencntr , timer_input , perio
 
    assign  _net_0 = ((period_r < 12'b000000001000)|(period_r > 12'b011111111111));
    assign  _net_1 = timer_input;
-   assign  _net_2 = p;
+   assign  _net_2 = timer_input;
    assign  _net_3 = 
 // synthesis translate_off
 // synopsys translate_off
@@ -182,7 +183,7 @@ always @(posedge silent)
  begin
 $display("Warning: control hazard(sweep:silent) at %d",$time);
  end
-#1 if (((_net_0)===1'bx) || (1'b1)===1'bx) $display("hazard (_net_0 || 1'b1) line 27 at %d\n",$time);
+#1 if (((_net_0)===1'bx) || (1'b1)===1'bx) $display("hazard (_net_0 || 1'b1) line 10 at %d\n",$time);
  end
 
 // synthesis translate_on
@@ -197,7 +198,7 @@ always @(posedge timer_set)
  begin
 $display("Warning: control hazard(sweep:timer_set) at %d",$time);
  end
-#1 if ((((exec&_net_3))===1'bx) || (1'b1)===1'bx) $display("hazard ((exec&_net_3) || 1'b1) line 70 at %d\n",$time);
+#1 if ((((exec&_net_3))===1'bx) || (1'b1)===1'bx) $display("hazard ((exec&_net_3) || 1'b1) line 53 at %d\n",$time);
  end
 
 // synthesis translate_on
@@ -211,7 +212,7 @@ end
 always @(posedge m_clock)
   begin
 if (set_param)
-      p_r <= (({1'b0,_net_2})+4'b0001);
+      p_r <= p;
 end
 always @(posedge m_clock)
   begin
@@ -233,33 +234,33 @@ if (((((((((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))&((((exec&_net_3)&_ne
 // synthesis translate_on
 // synopsys translate_on
 if (((((exec&_net_3)&_net_4)&_net_11)&(~n_r)))
-      period_r <= (period_r+(period_r>>1));
+      period_r <= (period_r+(period_r2>>1));
 else if (((((exec&_net_3)&_net_4)&_net_11)&n_r))
-      period_r <= (period_r+(~(period_r>>1)));
+      period_r <= (period_r+(~(period_r2>>1)));
 else if (((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))
-      period_r <= (period_r+(period_r>>2));
+      period_r <= (period_r+(period_r2>>2));
 else if (((((exec&_net_3)&_net_4)&_net_10)&n_r))
-      period_r <= (period_r+(~(period_r>>2)));
+      period_r <= (period_r+(~(period_r2>>2)));
 else if (((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))
-      period_r <= (period_r+(period_r>>3));
+      period_r <= (period_r+(period_r2>>3));
 else if (((((exec&_net_3)&_net_4)&_net_9)&n_r))
-      period_r <= (period_r+(~(period_r>>3)));
+      period_r <= (period_r+(~(period_r2>>3)));
 else if (((((exec&_net_3)&_net_4)&_net_8)&(~n_r)))
-      period_r <= (period_r+(period_r>>4));
+      period_r <= (period_r+(period_r2>>4));
 else if (((((exec&_net_3)&_net_4)&_net_8)&n_r))
-      period_r <= (period_r+(~(period_r>>4)));
+      period_r <= (period_r+(~(period_r2>>4)));
 else if (((((exec&_net_3)&_net_4)&_net_7)&(~n_r)))
-      period_r <= (period_r+(period_r>>5));
+      period_r <= (period_r+(period_r2>>5));
 else if (((((exec&_net_3)&_net_4)&_net_7)&n_r))
-      period_r <= (period_r+(~(period_r>>5)));
+      period_r <= (period_r+(~(period_r2>>5)));
 else if (((((exec&_net_3)&_net_4)&_net_6)&(~n_r)))
-      period_r <= (period_r+(period_r>>6));
+      period_r <= (period_r+(period_r2>>6));
 else if (((((exec&_net_3)&_net_4)&_net_6)&n_r))
-      period_r <= (period_r+(~(period_r>>6)));
+      period_r <= (period_r+(~(period_r2>>6)));
 else if (((((exec&_net_3)&_net_4)&_net_5)&(~n_r)))
-      period_r <= (period_r+(period_r>>7));
+      period_r <= (period_r+(period_r2>>7));
 else if (((((exec&_net_3)&_net_4)&_net_5)&n_r))
-      period_r <= (period_r+(~(period_r>>7)));
+      period_r <= (period_r+(~(period_r2>>7)));
 else if (set)
       period_r <= ({1'b0,_net_1});
 end
@@ -282,21 +283,54 @@ if ((((((((((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_n
 
 // synthesis translate_on
 // synopsys translate_on
-always @(posedge m_clock or posedge p_reset)
+always @(posedge m_clock)
   begin
-if (p_reset)
-     pp <= 4'b0000;
-else 
+
 // synthesis translate_off
 // synopsys translate_off
-if (((exec&(~_net_3))&(exec&_net_3)))   pp <= 4'bx; 
+if (((exec&(~_net_3))&set))   period_r2 <= 12'bx; 
   else 
 // synthesis translate_on
 // synopsys translate_on
 if ((exec&(~_net_3)))
-      pp <= (pp+4'b0001);
+      period_r2 <= period_r;
+else if (set)
+      period_r2 <= ({1'b0,_net_2});
+end
+
+// synthesis translate_off
+// synopsys translate_off
+always @(posedge m_clock)
+  begin
+if ((((exec&(~_net_3))|set)==1'b1) ||
+ (((exec&(~_net_3))|set)==1'b0) ) begin
+ if (((exec&(~_net_3))&set))
+ begin $display("Warning: assign collision(sweep:period_r2) at %d",$time);
+
+  end
+ end
+ else 
+ $display("Warning: register set hazard(sweep:period_r2) at %d",$time);
+
+  end
+
+// synthesis translate_on
+// synopsys translate_on
+always @(posedge m_clock or posedge p_reset)
+  begin
+if (p_reset)
+     pp <= 3'b000;
+else 
+// synthesis translate_off
+// synopsys translate_off
+if (((exec&(~_net_3))&(exec&_net_3)))   pp <= 3'bx; 
+  else 
+// synthesis translate_on
+// synopsys translate_on
+if ((exec&(~_net_3)))
+      pp <= (pp+3'b001);
 else if ((exec&_net_3))
-      pp <= 4'b0000;
+      pp <= 3'b000;
 end
 
 // synthesis translate_off
@@ -319,6 +353,6 @@ if ((((exec&(~_net_3))|(exec&_net_3))==1'b1) ||
 // synopsys translate_on
 endmodule
 /*
- Produced by NSL Core(version=20140126), IP ARCH, Inc. Sun Aug 14 23:25:07 2016
+ Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 00:33:42 2016
  Licensed to :EVALUATION USER
 */

@@ -1,0 +1,55 @@
+#include "./sweep.inc"
+
+declare sweep_ive simulation{
+  
+}
+
+module sweep_ive{
+  sweep sw;
+  func_self test();
+  reg cnt[10] = 0;
+  cnt++;
+  if(cnt == 100){
+    test();
+  }
+
+  func test seq{
+    /*
+    sw.e = 1;
+    sw.p = 1;
+    sw.n = 1;
+    sw.s = 1;
+    */
+    //sw.timer_input = 765;
+    //sw.set_param(e, p, n, s);
+    {
+      sw.lencntr = 8;
+      sw.set(765);
+      sw.set_param(1, 1, 0, 1);
+    }
+    _display("period = %x", sw.period);
+    sw.set(700);
+    _display("period = %x", sw.period);
+    sw.exec();
+    _display("period = %x", sw.period);
+    sw.exec();
+    _display("period = %x", sw.period);
+    sw.exec();
+    _display("period = %x", sw.period);
+    sw.exec();
+    _display("period = %x", sw.period);
+    sw.exec();
+    _display("period = %x", sw.period);
+    sw.exec();
+    _display("period = %x", sw.period);
+    sw.exec();
+    _display("period = %x", sw.period);
+    sw.exec();
+    _display("period = %x", sw.period);
+    sw.exec();
+    _display("period = %x", sw.period);
+    sw.exec();
+    _display("period = %x", sw.period);
+    _finish("finish");
+  }
+}
