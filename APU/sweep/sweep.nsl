@@ -7,41 +7,70 @@ declare sweep{
   input timer_input[11];
   output period[11];
   
-  func_in reset(timer_input);
+  func_in set(timer_input);
   func_in set_param(e,p,n,s);
   func_in exec();
 
   func_out silent();
+  func_out timer_set(period);
 }
 
 
+
 module sweep{
-  reg e_r,p_r[3],n_r,s_r[3];
-  reg period_r[11];
+  reg e_r,p_r[4],n_r,s_r[3];
+  reg period_r[12];
+  reg pp[4]=0;
 
-  period=period_r;
+  period=period_r[10:0];
   
-  if(lencntr==0) silent();
+  if(period_r<8||period_r>12'h7FF) silent();
 
-  func reset{
-    period_r := timer_input;
+  func set{
+    period_r := 12'timer_input;
   }
   
   func set_param{
     e_r:=e;
-    p_r:=p;
+    p_r:=p+1;
     n_r:=n;
     s_r:=s;
   }
 
   func exec{
-    if(e==1){
-      if(n==0){
-        period_r:=period_r+(period_r>>s);
+    if(pp==p_r){
+      if(e_r==1&&s_r!=0&&lencntr!=0){
+
+        any{
+          s_r == 1 : if(n_r) period_r := period_r +~(period_r >> 1);
+                     else    period_r := period_r + (period_r >> 1);
+          s_r == 2 : if(n_r) period_r := period_r +~(period_r >> 2);
+                     else    period_r := period_r + (period_r >> 2);
+          s_r == 3 : if(n_r) period_r := period_r +~(period_r >> 3);
+                     else    period_r := period_r + (period_r >> 3);
+          s_r == 4 : if(n_r) period_r := period_r +~(period_r >> 4);
+                     else    period_r := period_r + (period_r >> 4);
+          s_r == 5 : if(n_r) period_r := period_r +~(period_r >> 5);
+                     else    period_r := period_r + (period_r >> 5);
+          s_r == 6 : if(n_r) period_r := period_r +~(period_r >> 6);
+                     else    period_r := period_r + (period_r >> 6);
+          s_r == 7 : if(n_r) period_r := period_r +~(period_r >> 7);
+                     else    period_r := period_r + (period_r >> 7);
+        }
+
+        /*
+        if(n==0){
+          period_r:=period_r+(period_r>>s);
+        }
+        if(n==1){
+          period_r:=period_r+~(period_r>>s);
+        }
+        */
       }
-      if(n==1){
-        period_r:=period_r+~(period_r>>s);
-      }
+      timer_set();
+      pp:=0;
+    }else{
+      pp:=pp+1;
     }
   }
   

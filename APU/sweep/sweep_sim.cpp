@@ -48,6 +48,24 @@ int main(int argv,char *argc[]){
 	addr_i = new Vsweep();
 
 	init();
+  falling_clock();
+  addr_i->e  = 1;
+  addr_i->p  = 1;
+  addr_i->n  = 1;
+  addr_i->s  = 1;
+  addr_i->lencntr = 8;
+  addr_i->timer_input = 0x7E;
+  
+  addr_i->set = 1;
+  addr_i->set_param = 1;
+  rising_clock();
+
+  for(int i = 0; i < 10; i++){
+    addr_i->exec = 1;
+    falling_clock();
+    rising_clock();
+    printf("period = %x\n", addr_i->period);
+  }
 	return 0;
 }
 
