@@ -1,0 +1,48 @@
+declare sweep{
+  input e;
+  input p[3];
+  input n;
+  input s[3];
+  input lencntr[4];
+  input timer_input[11];
+  output period[11];
+  
+  func_in reset(timer_input);
+  func_in set_param(e,p,n,s);
+  func_in exec();
+
+  func_out silent();
+}
+
+
+module sweep{
+  reg e_r,p_r[3],n_r,s_r[3];
+  reg period_r[11];
+
+  period=period_r;
+  
+  if(lencntr==0) silent();
+
+  func reset{
+    period_r := timer_input;
+  }
+  
+  func set_param{
+    e_r:=e;
+    p_r:=p;
+    n_r:=n;
+    s_r:=s;
+  }
+
+  func exec{
+    if(e==1){
+      if(n==0){
+        period_r:=period_r+(period_r>>s);
+      }
+      if(n==1){
+        period_r:=period_r+~(period_r>>s);
+      }
+    }
+  }
+  
+}
