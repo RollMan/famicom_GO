@@ -1,0 +1,169 @@
+declare duty{
+  input Vin[4];
+  input dnum[2];
+  output V0[4];
+
+  func_in setduty(dnum);
+  func_in exec();
+}
+
+module duty{
+  reg cnt[6] = 0;
+  reg d[2];
+
+  func setduty{
+    d := dnum;
+    cnt := 0;
+  }
+  func exec{
+    any{
+      cnt == 6'd31 : cnt := 0;
+      cnt != 6'd31 : cnt++;
+    }
+  }
+  if(d == 2'b00){
+    any{
+      cnt ==  0 : V0 = Vin;
+      cnt ==  1 : V0 = Vin;
+      cnt ==  2 : V0 = Vin;
+      cnt ==  3 : V0 = Vin;
+      cnt ==  4 : V0 =   0;
+      cnt ==  5 : V0 =   0;
+      cnt ==  6 : V0 =   0;
+      cnt ==  7 : V0 =   0;
+      cnt ==  8 : V0 =   0;
+      cnt ==  9 : V0 =   0;
+      cnt == 10 : V0 =   0;
+      cnt == 11 : V0 =   0;
+      cnt == 12 : V0 =   0;
+      cnt == 13 : V0 =   0;
+      cnt == 14 : V0 =   0;
+      cnt == 15 : V0 =   0;
+      cnt == 16 : V0 =   0;
+      cnt == 17 : V0 =   0;
+      cnt == 18 : V0 =   0;
+      cnt == 19 : V0 =   0;
+      cnt == 20 : V0 =   0;
+      cnt == 21 : V0 =   0;
+      cnt == 22 : V0 =   0;
+      cnt == 23 : V0 =   0;
+      cnt == 24 : V0 =   0;
+      cnt == 25 : V0 =   0;
+      cnt == 26 : V0 =   0;
+      cnt == 27 : V0 =   0;
+      cnt == 28 : V0 =   0;
+      cnt == 29 : V0 =   0;
+      cnt == 30 : V0 =   0;
+      cnt == 31 : V0 =   0;
+    }
+  }
+  if(d == 2'b01){
+    any{
+      cnt ==  0 : V0 = Vin;
+      cnt ==  1 : V0 = Vin;
+      cnt ==  2 : V0 = Vin;
+      cnt ==  3 : V0 = Vin;
+      cnt ==  4 : V0 = Vin;
+      cnt ==  5 : V0 = Vin;
+      cnt ==  6 : V0 = Vin;
+      cnt ==  7 : V0 = Vin;
+      cnt ==  8 : V0 =   0;
+      cnt ==  9 : V0 =   0;
+      cnt == 10 : V0 =   0;
+      cnt == 11 : V0 =   0;
+      cnt == 12 : V0 =   0;
+      cnt == 13 : V0 =   0;
+      cnt == 14 : V0 =   0;
+      cnt == 15 : V0 =   0;
+      cnt == 16 : V0 =   0;
+      cnt == 17 : V0 =   0;
+      cnt == 18 : V0 =   0;
+      cnt == 19 : V0 =   0;
+      cnt == 20 : V0 =   0;
+      cnt == 21 : V0 =   0;
+      cnt == 22 : V0 =   0;
+      cnt == 23 : V0 =   0;
+      cnt == 24 : V0 =   0;
+      cnt == 25 : V0 =   0;
+      cnt == 26 : V0 =   0;
+      cnt == 27 : V0 =   0;
+      cnt == 28 : V0 =   0;
+      cnt == 29 : V0 =   0;
+      cnt == 30 : V0 =   0;
+      cnt == 31 : V0 =   0;
+    }
+  }
+  if(d == 2'b10){
+    any{
+      cnt ==  0 : V0 = Vin;
+      cnt ==  1 : V0 = Vin;
+      cnt ==  2 : V0 = Vin;
+      cnt ==  3 : V0 = Vin;
+      cnt ==  4 : V0 = Vin;
+      cnt ==  5 : V0 = Vin;
+      cnt ==  6 : V0 = Vin;
+      cnt ==  7 : V0 = Vin;
+      cnt ==  8 : V0 = Vin;
+      cnt ==  9 : V0 = Vin;
+      cnt == 10 : V0 = Vin;
+      cnt == 11 : V0 = Vin;
+      cnt == 12 : V0 = Vin;
+      cnt == 13 : V0 = Vin;
+      cnt == 14 : V0 = Vin;
+      cnt == 15 : V0 = Vin;
+      cnt == 16 : V0 =   0;
+      cnt == 17 : V0 =   0;
+      cnt == 18 : V0 =   0;
+      cnt == 19 : V0 =   0;
+      cnt == 20 : V0 =   0;
+      cnt == 21 : V0 =   0;
+      cnt == 22 : V0 =   0;
+      cnt == 23 : V0 =   0;
+      cnt == 24 : V0 =   0;
+      cnt == 25 : V0 =   0;
+      cnt == 26 : V0 =   0;
+      cnt == 27 : V0 =   0;
+      cnt == 28 : V0 =   0;
+      cnt == 29 : V0 =   0;
+      cnt == 30 : V0 =   0;
+      cnt == 31 : V0 =   0;
+
+    }
+  }
+  if(d == 2'b11){
+    any{
+      cnt ==  0 : V0 = Vin;
+      cnt ==  1 : V0 = Vin;
+      cnt ==  2 : V0 = Vin;
+      cnt ==  3 : V0 = Vin;
+      cnt ==  4 : V0 = Vin;
+      cnt ==  5 : V0 = Vin;
+      cnt ==  6 : V0 = Vin;
+      cnt ==  7 : V0 = Vin;
+      cnt ==  8 : V0 = Vin;
+      cnt ==  9 : V0 = Vin;
+      cnt == 10 : V0 = Vin;
+      cnt == 11 : V0 = Vin;
+      cnt == 12 : V0 = Vin;
+      cnt == 13 : V0 = Vin;
+      cnt == 14 : V0 = Vin;
+      cnt == 15 : V0 = Vin;
+      cnt == 16 : V0 = Vin;
+      cnt == 17 : V0 = Vin;
+      cnt == 18 : V0 = Vin;
+      cnt == 19 : V0 = Vin;
+      cnt == 20 : V0 = Vin;
+      cnt == 21 : V0 = Vin;
+      cnt == 22 : V0 = Vin;
+      cnt == 23 : V0 = Vin;
+      cnt == 24 : V0 =   0;
+      cnt == 25 : V0 =   0;
+      cnt == 26 : V0 =   0;
+      cnt == 27 : V0 =   0;
+      cnt == 28 : V0 =   0;
+      cnt == 29 : V0 =   0;
+      cnt == 30 : V0 =   0;
+      cnt == 31 : V0 =   0;
+    }
+  }
+}

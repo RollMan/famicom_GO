@@ -1,0 +1,12 @@
+# DESCRIPTION: Verilator output: Timestamp data for --skip-identical.  Delete at will.
+C "--cc duty.v --exe ../duty_sim.cpp"
+S   4203768  5025816  1471144840 "/usr/bin/verilator_bin"
+S    403540   536291  1471155442 "duty.v"
+T   1562069   536271  1471155446 "obj_dir/Vduty.cpp"
+T      8024   536270  1471155446 "obj_dir/Vduty.h"
+T      1960   536273  1471155446 "obj_dir/Vduty.mk"
+T       569   536269  1471155446 "obj_dir/Vduty__Syms.cpp"
+T       955   536268  1471155446 "obj_dir/Vduty__Syms.h"
+T       202   536267  1471155446 "obj_dir/Vduty__ver.d"
+T         0        0  1471155446 "obj_dir/Vduty__verFiles.dat"
+T      1082   536272  1471155446 "obj_dir/Vduty_classes.mk"

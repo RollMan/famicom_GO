@@ -1,0 +1,4 @@
+( cd ./debug; make -f ../Makefile SRCDIR=.. TARGET=duty Vduty )
+make[1]: Entering directory '/home/rollman/Documents/famicomgo/famicom_GO/APU/duty/debug'
+sed -i -e "s/#1//" *.v
+verilator --cc  duty.v --exe ../duty_sim.cpp
