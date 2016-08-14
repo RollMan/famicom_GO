@@ -1,17 +1,20 @@
 #include "./sweep.inc"
 
 module sweep{
-  reg e_r,p_r[3],n_r,s_r[3];
-  reg period_r[12], period_r2[12];
+  reg e_r=0,p_r[3],n_r,s_r[3];
+  reg period_r[12]=8;
   reg pp[3]=0;
 
   period=period_r[10:0];
   
-  if(period_r<8||period_r>12'h7FF) silent();
+  if(period_r<8||period_r>12'h7FF){
+    silent();
+    if(set_param == 0)
+      e_r := 0;
+  }
 
   func set{
     period_r := 12'timer_input;
-    period_r2 := 12'timer_input;
   }
   
   func set_param{
@@ -26,20 +29,20 @@ module sweep{
       if(e_r==1&&s_r!=0&&lencntr!=0){
 
         any{
-          s_r == 1 :{if(n_r) period_r := period_r +~(period_r2 >> 1);
-                     else    period_r := period_r + (period_r2 >> 1);}
-          s_r == 2 :{if(n_r) period_r := period_r +~(period_r2 >> 2);
-                     else    period_r := period_r + (period_r2 >> 2);}
-          s_r == 3 :{if(n_r) period_r := period_r +~(period_r2 >> 3);
-                     else    period_r := period_r + (period_r2 >> 3);}
-          s_r == 4 :{if(n_r) period_r := period_r +~(period_r2 >> 4);
-                     else    period_r := period_r + (period_r2 >> 4);}
-          s_r == 5 :{if(n_r) period_r := period_r +~(period_r2 >> 5);
-                     else    period_r := period_r + (period_r2 >> 5);}
-          s_r == 6 :{if(n_r) period_r := period_r +~(period_r2 >> 6);
-                     else    period_r := period_r + (period_r2 >> 6);}
-          s_r == 7 :{if(n_r) period_r := period_r +~(period_r2 >> 7);
-                     else    period_r := period_r + (period_r2 >> 7);}
+          s_r == 1 :{if(n_r) period_r := period_r +~(period_r >> 1);
+                     else    period_r := period_r + (period_r >> 1);}
+          s_r == 2 :{if(n_r) period_r := period_r +~(period_r >> 2);
+                     else    period_r := period_r + (period_r >> 2);}
+          s_r == 3 :{if(n_r) period_r := period_r +~(period_r >> 3);
+                     else    period_r := period_r + (period_r >> 3);}
+          s_r == 4 :{if(n_r) period_r := period_r +~(period_r >> 4);
+                     else    period_r := period_r + (period_r >> 4);}
+          s_r == 5 :{if(n_r) period_r := period_r +~(period_r >> 5);
+                     else    period_r := period_r + (period_r >> 5);}
+          s_r == 6 :{if(n_r) period_r := period_r +~(period_r >> 6);
+                     else    period_r := period_r + (period_r >> 6);}
+          s_r == 7 :{if(n_r) period_r := period_r +~(period_r >> 7);
+                     else    period_r := period_r + (period_r >> 7);}
         }
         /*
         if(n==0){
@@ -54,7 +57,6 @@ module sweep{
       pp:=0;
     }else{
       pp:=pp+1;
-      period_r2 := period_r;
     }
   }
   

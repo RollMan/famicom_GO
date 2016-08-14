@@ -28,7 +28,7 @@ module sweep_ive{
       sw.set_param(1, 1, 0, 1);
     }
     _display("period = %x", sw.period);
-    sw.set(700);
+    sw.exec();
     _display("period = %x", sw.period);
     sw.exec();
     _display("period = %x", sw.period);

@@ -3,7 +3,7 @@
 `default_nettype none
 
 /*
- Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 00:33:43 2016
+ Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 01:01:56 2016
  Licensed to :EVALUATION USER
 */
 
@@ -74,16 +74,7 @@ $display("Warning: control hazard(sweep_ive:test) at %d",$time);
    assign  _sw_n = ((test|_reg_25))? (((test|_reg_25))?1'b0:1'b0):1'bx;
    assign  _sw_s = ((test|_reg_25))? (((test|_reg_25))?3'b001:3'b0):3'bx;
    assign  _sw_lencntr = ((test|_reg_25))? (((test|_reg_25))?4'b1000:4'b0):4'bx;
-always @(posedge m_clock or posedge p_reset)
-  begin
-if (((test|_reg_25)&_reg_23))
- begin $display("Warning: assign collision(sweep_ive:_sw_timer_input) at %d",$time);
-if ((test|_reg_25)) $display("assert ((test|_reg_25)) line 27 at %d\n",$time);
-if (_reg_23) $display("assert (_reg_23) line 31 at %d\n",$time);
- end
- end
-   assign  _sw_timer_input = (((test|_reg_25)&_reg_23))? 11'bx :(((test|_reg_25)|_reg_23))? (((test|_reg_25))?11'b01011111101:11'b0)|
-    ((_reg_23)?11'b01010111100:11'b0):11'bx;
+   assign  _sw_timer_input = ((test|_reg_25))? (((test|_reg_25))?11'b01011111101:11'b0):11'bx;
 always @(posedge _sw_set)
   begin
 #1 if (_sw_set===1'bx)
@@ -91,10 +82,8 @@ always @(posedge _sw_set)
 $display("Warning: control hazard(sweep_ive:_sw_set) at %d",$time);
  end
 #1 if ((((test|_reg_25))===1'bx) || (1'b1)===1'bx) $display("hazard ((test|_reg_25) || 1'b1) line 27 at %d\n",$time);
-#1 if (((_reg_23)===1'bx) || (1'b1)===1'bx) $display("hazard (_reg_23 || 1'b1) line 31 at %d\n",$time);
  end
-   assign  _sw_set = (test|_reg_25)|
-    _reg_23;
+   assign  _sw_set = (test|_reg_25);
 always @(posedge _sw_set_param)
   begin
 #1 if (_sw_set_param===1'bx)
@@ -110,6 +99,7 @@ always @(posedge _sw_exec)
  begin
 $display("Warning: control hazard(sweep_ive:_sw_exec) at %d",$time);
  end
+#1 if (((_reg_23)===1'bx) || (1'b1)===1'bx) $display("hazard (_reg_23 || 1'b1) line 31 at %d\n",$time);
 #1 if (((_reg_21)===1'bx) || (1'b1)===1'bx) $display("hazard (_reg_21 || 1'b1) line 33 at %d\n",$time);
 #1 if (((_reg_19)===1'bx) || (1'b1)===1'bx) $display("hazard (_reg_19 || 1'b1) line 35 at %d\n",$time);
 #1 if (((_reg_17)===1'bx) || (1'b1)===1'bx) $display("hazard (_reg_17 || 1'b1) line 37 at %d\n",$time);
@@ -121,7 +111,8 @@ $display("Warning: control hazard(sweep_ive:_sw_exec) at %d",$time);
 #1 if (((_reg_5)===1'bx) || (1'b1)===1'bx) $display("hazard (_reg_5 || 1'b1) line 49 at %d\n",$time);
 #1 if (((_reg_3)===1'bx) || (1'b1)===1'bx) $display("hazard (_reg_3 || 1'b1) line 51 at %d\n",$time);
  end
-   assign  _sw_exec = _reg_21|
+   assign  _sw_exec = _reg_23|
+    _reg_21|
     _reg_19|
     _reg_17|
     _reg_15|
@@ -418,11 +409,11 @@ endmodule
 // synthesis translate_on
 // synopsys translate_on
 /*
- Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 00:33:43 2016
+ Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 01:01:56 2016
  Licensed to :EVALUATION USER
 */
 /*
- Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 00:33:43 2016
+ Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 01:01:56 2016
  Licensed to :EVALUATION USER:
 */
 

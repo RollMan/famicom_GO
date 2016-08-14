@@ -1,5 +1,5 @@
 /*
- Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 00:33:42 2016
+ Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 01:01:57 2016
  Licensed to :EVALUATION USER
 */
 /*
@@ -38,10 +38,9 @@ module sweep ( p_reset , m_clock , e , p , n , s , lencntr , timer_input , perio
   reg n_r;
   reg [2:0] s_r;
   reg [11:0] period_r;
-  reg [11:0] period_r2;
   reg [2:0] pp;
   wire _net_0;
-  wire [10:0] _net_1;
+  wire _net_1;
   wire [10:0] _net_2;
   wire _net_3;
   wire _net_4;
@@ -54,7 +53,19 @@ module sweep ( p_reset , m_clock , e , p , n , s , lencntr , timer_input , perio
   wire _net_11;
 
    assign  _net_0 = ((period_r < 12'b000000001000)|(period_r > 12'b011111111111));
-   assign  _net_1 = timer_input;
+   assign  _net_1 = 
+// synthesis translate_off
+// synopsys translate_off
+(_net_0)? 
+// synthesis translate_on
+// synopsys translate_on
+((_net_0)?(set_param==1'b0):1'b0)
+// synthesis translate_off
+// synopsys translate_off
+:1'bx
+// synthesis translate_on
+// synopsys translate_on
+;
    assign  _net_2 = timer_input;
    assign  _net_3 = 
 // synthesis translate_off
@@ -75,7 +86,7 @@ module sweep ( p_reset , m_clock , e , p , n , s , lencntr , timer_input , perio
 ((exec&_net_3))? 
 // synthesis translate_on
 // synopsys translate_on
-(((exec&_net_3))?(((e_r==1'b1)&(s_r != 3'b000))&(lencntr != 4'b0000)):1'b0)
+(((exec&_net_3))?((e_r==1'b1)&(s_r != 3'b000)):1'b0)
 // synthesis translate_off
 // synopsys translate_off
 :1'bx
@@ -183,7 +194,7 @@ always @(posedge silent)
  begin
 $display("Warning: control hazard(sweep:silent) at %d",$time);
  end
-#1 if (((_net_0)===1'bx) || (1'b1)===1'bx) $display("hazard (_net_0 || 1'b1) line 10 at %d\n",$time);
+#1 if (((_net_0)===1'bx) || (1'b1)===1'bx) $display("hazard (_net_0 || 1'b1) line 11 at %d\n",$time);
  end
 
 // synthesis translate_on
@@ -198,17 +209,47 @@ always @(posedge timer_set)
  begin
 $display("Warning: control hazard(sweep:timer_set) at %d",$time);
  end
-#1 if ((((exec&_net_3))===1'bx) || (1'b1)===1'bx) $display("hazard ((exec&_net_3) || 1'b1) line 53 at %d\n",$time);
+#1 if ((((exec&_net_3))===1'bx) || (1'b1)===1'bx) $display("hazard ((exec&_net_3) || 1'b1) line 56 at %d\n",$time);
  end
 
 // synthesis translate_on
 // synopsys translate_on
    assign  timer_set = (exec&_net_3);
-always @(posedge m_clock)
+always @(posedge m_clock or posedge p_reset)
   begin
+if (p_reset)
+     e_r <= 1'b0;
+else 
+// synthesis translate_off
+// synopsys translate_off
+if ((set_param&(_net_0&_net_1)))   e_r <= 1'bx; 
+  else 
+// synthesis translate_on
+// synopsys translate_on
 if (set_param)
       e_r <= e;
+else if ((_net_0&_net_1))
+      e_r <= 1'b0;
 end
+
+// synthesis translate_off
+// synopsys translate_off
+always @(posedge m_clock)
+  begin
+if (((set_param|(_net_0&_net_1))==1'b1) ||
+ ((set_param|(_net_0&_net_1))==1'b0) ) begin
+ if ((set_param&(_net_0&_net_1)))
+ begin $display("Warning: assign collision(sweep:e_r) at %d",$time);
+
+  end
+ end
+ else 
+ $display("Warning: register set hazard(sweep:e_r) at %d",$time);
+
+  end
+
+// synthesis translate_on
+// synopsys translate_on
 always @(posedge m_clock)
   begin
 if (set_param)
@@ -224,9 +265,11 @@ always @(posedge m_clock)
 if (set_param)
       s_r <= s;
 end
-always @(posedge m_clock)
+always @(posedge m_clock or posedge p_reset)
   begin
-
+if (p_reset)
+     period_r <= 12'b000000001000;
+else 
 // synthesis translate_off
 // synopsys translate_off
 if (((((((((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))&((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))&((((exec&_net_3)&_net_4)&_net_10)&(~n_r))))|(((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))&((((exec&_net_3)&_net_4)&_net_10)&n_r)))|((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))&((((exec&_net_3)&_net_4)&_net_9)&(~n_r))))|(((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))|((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))&((((exec&_net_3)&_net_4)&_net_9)&n_r)))|((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))|((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_9)&n_r))&((((exec&_net_3)&_net_4)&_net_8)&(~n_r))))|(((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))|((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_9)&n_r))|((((exec&_net_3)&_net_4)&_net_8)&(~n_r)))&((((exec&_net_3)&_net_4)&_net_8)&n_r)))|((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))|((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_9)&n_r))|((((exec&_net_3)&_net_4)&_net_8)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_8)&n_r))&((((exec&_net_3)&_net_4)&_net_7)&(~n_r))))|(((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))|((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_9)&n_r))|((((exec&_net_3)&_net_4)&_net_8)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_8)&n_r))|((((exec&_net_3)&_net_4)&_net_7)&(~n_r)))&((((exec&_net_3)&_net_4)&_net_7)&n_r)))|((((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))|((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_9)&n_r))|((((exec&_net_3)&_net_4)&_net_8)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_8)&n_r))|((((exec&_net_3)&_net_4)&_net_7)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_7)&n_r))&((((exec&_net_3)&_net_4)&_net_6)&(~n_r))))|(((((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))|((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_9)&n_r))|((((exec&_net_3)&_net_4)&_net_8)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_8)&n_r))|((((exec&_net_3)&_net_4)&_net_7)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_7)&n_r))|((((exec&_net_3)&_net_4)&_net_6)&(~n_r)))&((((exec&_net_3)&_net_4)&_net_6)&n_r)))|((((((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))|((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_9)&n_r))|((((exec&_net_3)&_net_4)&_net_8)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_8)&n_r))|((((exec&_net_3)&_net_4)&_net_7)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_7)&n_r))|((((exec&_net_3)&_net_4)&_net_6)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_6)&n_r))&((((exec&_net_3)&_net_4)&_net_5)&(~n_r))))|(((((((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))|((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_9)&n_r))|((((exec&_net_3)&_net_4)&_net_8)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_8)&n_r))|((((exec&_net_3)&_net_4)&_net_7)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_7)&n_r))|((((exec&_net_3)&_net_4)&_net_6)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_6)&n_r))|((((exec&_net_3)&_net_4)&_net_5)&(~n_r)))&((((exec&_net_3)&_net_4)&_net_5)&n_r)))|((((((((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_net_4)&_net_11)&n_r))|((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_10)&n_r))|((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_9)&n_r))|((((exec&_net_3)&_net_4)&_net_8)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_8)&n_r))|((((exec&_net_3)&_net_4)&_net_7)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_7)&n_r))|((((exec&_net_3)&_net_4)&_net_6)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_6)&n_r))|((((exec&_net_3)&_net_4)&_net_5)&(~n_r)))|((((exec&_net_3)&_net_4)&_net_5)&n_r))&set)))   period_r <= 12'bx; 
@@ -234,35 +277,35 @@ if (((((((((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))&((((exec&_net_3)&_ne
 // synthesis translate_on
 // synopsys translate_on
 if (((((exec&_net_3)&_net_4)&_net_11)&(~n_r)))
-      period_r <= (period_r+(period_r2>>1));
+      period_r <= (period_r+(period_r>>1));
 else if (((((exec&_net_3)&_net_4)&_net_11)&n_r))
-      period_r <= (period_r+(~(period_r2>>1)));
+      period_r <= (period_r+(~(period_r>>1)));
 else if (((((exec&_net_3)&_net_4)&_net_10)&(~n_r)))
-      period_r <= (period_r+(period_r2>>2));
+      period_r <= (period_r+(period_r>>2));
 else if (((((exec&_net_3)&_net_4)&_net_10)&n_r))
-      period_r <= (period_r+(~(period_r2>>2)));
+      period_r <= (period_r+(~(period_r>>2)));
 else if (((((exec&_net_3)&_net_4)&_net_9)&(~n_r)))
-      period_r <= (period_r+(period_r2>>3));
+      period_r <= (period_r+(period_r>>3));
 else if (((((exec&_net_3)&_net_4)&_net_9)&n_r))
-      period_r <= (period_r+(~(period_r2>>3)));
+      period_r <= (period_r+(~(period_r>>3)));
 else if (((((exec&_net_3)&_net_4)&_net_8)&(~n_r)))
-      period_r <= (period_r+(period_r2>>4));
+      period_r <= (period_r+(period_r>>4));
 else if (((((exec&_net_3)&_net_4)&_net_8)&n_r))
-      period_r <= (period_r+(~(period_r2>>4)));
+      period_r <= (period_r+(~(period_r>>4)));
 else if (((((exec&_net_3)&_net_4)&_net_7)&(~n_r)))
-      period_r <= (period_r+(period_r2>>5));
+      period_r <= (period_r+(period_r>>5));
 else if (((((exec&_net_3)&_net_4)&_net_7)&n_r))
-      period_r <= (period_r+(~(period_r2>>5)));
+      period_r <= (period_r+(~(period_r>>5)));
 else if (((((exec&_net_3)&_net_4)&_net_6)&(~n_r)))
-      period_r <= (period_r+(period_r2>>6));
+      period_r <= (period_r+(period_r>>6));
 else if (((((exec&_net_3)&_net_4)&_net_6)&n_r))
-      period_r <= (period_r+(~(period_r2>>6)));
+      period_r <= (period_r+(~(period_r>>6)));
 else if (((((exec&_net_3)&_net_4)&_net_5)&(~n_r)))
-      period_r <= (period_r+(period_r2>>7));
+      period_r <= (period_r+(period_r>>7));
 else if (((((exec&_net_3)&_net_4)&_net_5)&n_r))
-      period_r <= (period_r+(~(period_r2>>7)));
+      period_r <= (period_r+(~(period_r>>7)));
 else if (set)
-      period_r <= ({1'b0,_net_1});
+      period_r <= ({1'b0,_net_2});
 end
 
 // synthesis translate_off
@@ -278,39 +321,6 @@ if ((((((((((((((((((((exec&_net_3)&_net_4)&_net_11)&(~n_r))|((((exec&_net_3)&_n
  end
  else 
  $display("Warning: register set hazard(sweep:period_r) at %d",$time);
-
-  end
-
-// synthesis translate_on
-// synopsys translate_on
-always @(posedge m_clock)
-  begin
-
-// synthesis translate_off
-// synopsys translate_off
-if (((exec&(~_net_3))&set))   period_r2 <= 12'bx; 
-  else 
-// synthesis translate_on
-// synopsys translate_on
-if ((exec&(~_net_3)))
-      period_r2 <= period_r;
-else if (set)
-      period_r2 <= ({1'b0,_net_2});
-end
-
-// synthesis translate_off
-// synopsys translate_off
-always @(posedge m_clock)
-  begin
-if ((((exec&(~_net_3))|set)==1'b1) ||
- (((exec&(~_net_3))|set)==1'b0) ) begin
- if (((exec&(~_net_3))&set))
- begin $display("Warning: assign collision(sweep:period_r2) at %d",$time);
-
-  end
- end
- else 
- $display("Warning: register set hazard(sweep:period_r2) at %d",$time);
 
   end
 
@@ -353,6 +363,6 @@ if ((((exec&(~_net_3))|(exec&_net_3))==1'b1) ||
 // synopsys translate_on
 endmodule
 /*
- Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 00:33:42 2016
+ Produced by NSL Core(version=20140126), IP ARCH, Inc. Mon Aug 15 01:01:57 2016
  Licensed to :EVALUATION USER
 */
